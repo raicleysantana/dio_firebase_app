@@ -4,7 +4,7 @@ import App from './src/app';
 
 console.disableYellowBox = true;
 
-export default function Index() {
+const app = function Index() {
     return (<>
             <StatusBar
                 style="light"
@@ -15,3 +15,4 @@ export default function Index() {
     );
 }
 
+export default app;

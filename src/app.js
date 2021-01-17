@@ -33,13 +33,15 @@ const App = function App() {
             projectId: "dio-firebase-7a33d",
             storageBucket: "dio-firebase-7a33d.appspot.com",
             messagingSenderId: "1079064115738",
-            appId: "1:1079064115738:web:20b9774808e34c5caeefa3"
+            appId: "1:1079064115738:web:20b9774808e34c5caeefa3",
+            databaseURL : 'https://dio-firebase-7a33d-default-rtdb.firebaseio.com/'
         };
 
         if (!firebase.apps.length) {
             firebase.initializeApp(firebaseConfig);
         }
-        console.log(user);
+
+
         const subscriber = firebase.auth().onAuthStateChanged(onAuthStateChanged);
         return subscriber; // unsubscribe on unmount
     }, []);
@@ -59,7 +61,15 @@ const App = function App() {
                                 headerShown: false,
                             }}
                         />
+                        <Stack.Screen
+                            name={routers.areaFirebase}
+                            component={() => selectRouters(routers.areaFirebase)}
+                            options={{
+                                headerShown: true,
+                            }}
+                        />
                     </>
+
                 ) : (
                     <>
                         <Stack.Screen
@@ -76,6 +86,7 @@ const App = function App() {
                                 headerShown: false,
                             }}
                         />
+
                     </>
                 )}
             </Stack.Navigator>

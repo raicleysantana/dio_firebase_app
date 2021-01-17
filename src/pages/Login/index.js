@@ -13,8 +13,8 @@ const Login = function Index() {
         isVisible: false,
         message: '',
     })
-    const navigation = useNavigation();
 
+    const navigation = useNavigation();
 
     const isValidEmail = (emailToValidate) => {
         if (!emailToValidate) {
@@ -24,14 +24,15 @@ const Login = function Index() {
             })
             return false;
         }
-        if (emailToValidate.length > 4) {
+
+        if (emailToValidate.length <= 4) {
             setError({
                 isVisible: true,
                 message: "Email invalido"
             })
-            return true;
+            return false;
         }
-        return false;
+        return true;
     };
 
     const isValidPassword = (passowrdToValidate) => {
@@ -56,6 +57,24 @@ const Login = function Index() {
     const sign = () => {
         if (isValidEmail(email) && isValidPassword(password)) {
             //fazer login
+            firebase.auth().signInWithEmailAndPassword(email, password)
+                .then(() => console.log("autenticado")).catch((error) => {
+                if (error.code === 'auth/email-already-in-use') {
+                    console.log('That email address is already in use!');
+                    setError({
+                        isVisible: true,
+                        message: "Email já cadastrado"
+                    });
+                }
+
+                if (error.code === 'auth/invalid-email') {
+                    console.log('That email address is invalid!');
+                    setError({
+                        isVisible: true,
+                        message: "Email inváldo"
+                    });
+                }
+            });
         }
     };
 
